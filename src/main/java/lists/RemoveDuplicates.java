@@ -16,7 +16,6 @@ public class RemoveDuplicates<T> {
             var beforeMoving = fixed;
             System.out.println(fixed.getData() + " ... " + moving.getData());
             if (fixed.getData().equals(moving.getData())) {
-//                System.out.println("-> " + beforeMoving.getData() + " ... " + moving.getData());
                 if (moving.getNext() == null) {
                     beforeMoving.setNext(null);
                 } else {
@@ -27,9 +26,7 @@ public class RemoveDuplicates<T> {
             while (moving.getNext() != null) {
                 beforeMoving = moving;
                 moving = moving.getNext();
-//                System.out.println(fixed.getData() + " ... " + moving.getData());
                 if (fixed.getData().equals(moving.getData())) {
-//                    System.out.println("-> " + beforeMoving.getData() + " ... " + moving.getData());
                     beforeMoving.setNext(moving.getNext());
                 }
             }

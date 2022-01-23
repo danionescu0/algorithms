@@ -24,7 +24,12 @@ class RemoveDuplicatesTest {
 
     @Test
     void removeOneDuplicate() {
-        var list = getSmallList();
+        var list = new SingleLinkedList<Integer>();
+        list.appendNode(5);
+        list.appendNode(8);
+        list.appendNode(3);
+        list.appendNode(5);
+        list.appendNode(1);
         var sut = new RemoveDuplicates<Integer>();
         var result = sut.removeDuplicates(list);
         checkList(Arrays.asList(5, 8, 3, 1), result);
@@ -55,17 +60,6 @@ class RemoveDuplicatesTest {
         var result = sut.removeDuplicates(list);
         System.out.println(result);
         checkList(Arrays.asList(5), result);
-    }
-
-    private SingleLinkedList<Integer> getSmallList() {
-        var list = new SingleLinkedList<Integer>();
-        list.appendNode(5);
-        list.appendNode(8);
-        list.appendNode(3);
-        list.appendNode(5);
-        list.appendNode(1);
-
-        return list;
     }
 
     private <T> void checkList(List<T> expected, SingleLinkedList<T> list) {
