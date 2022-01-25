@@ -24,8 +24,6 @@ class PalindromePermutationTest {
     @Test
     void cornerCases() {
         var pal = new PalindromePermutation();
-//        Assertions.assertFalse(pal.isPermutation("ci"));
-//        Assertions.assertTrue(pal.isPermutation("z"));
         Assertions.assertTrue(pal.isPermutation("zzz"));
         Assertions.assertTrue(pal.isPermutation("aaaa"));
 
