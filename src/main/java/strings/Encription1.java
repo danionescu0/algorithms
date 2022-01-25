@@ -30,12 +30,9 @@ Complete the encryption function in the editor below.
 
 encryption has the following parameter(s):
 
-
-
-
  contains characters in the range ascii[a-z] and space, ascii(32).
  */
-public class Encription {
+public class Encription1 {
     public String encryption(String input) {
         var trimmed = input.replaceAll("\\s", "");
         var rows = Math.floor(Math.sqrt(trimmed.length()));
