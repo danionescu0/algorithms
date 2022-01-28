@@ -1,5 +1,6 @@
-package lists;
+package arrays;
 
+import arrays.SumSwap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
