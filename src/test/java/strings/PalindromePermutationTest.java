@@ -12,12 +12,12 @@ class PalindromePermutationTest {
         var pal = new PalindromePermutation();
         Assertions.assertTrue(pal.isPermutation("Tact Coa"));
         Assertions.assertTrue(pal.isPermutation("aauutty"));
+        Assertions.assertTrue(pal.isPermutation("cim"));
     }
 
     @Test
     void isNotPermutation() {
         var pal = new PalindromePermutation();
-        Assertions.assertFalse(pal.isPermutation("cim"));
         Assertions.assertFalse(pal.isPermutation("trala"));
     }
 

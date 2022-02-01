@@ -3,14 +3,12 @@ package lists;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class RemoveDuplicatesTest {
-
     @Test
     void singleLinkedList() {
         var list = new SingleLinkedList<Integer>();
