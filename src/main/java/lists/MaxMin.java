@@ -17,8 +17,14 @@ import java.util.TreeSet;
  * arr = [1, 4, 7, 2]
  * k = 2
  * arr' = [4, 7] , 7 - 4 = 3
+ *
+ * Constranints:
+ * n < 10^5
+ * 2 < k < n
+ * 0 < arr[i] <= 10^9
  */
 public class MaxMin {
+    //@todo optimize code, the sorting makes it inefficient
     public static int get(int k, List<Integer> input) {
         if (input.size() < k) {
             throw new IllegalArgumentException("K must me less then input list size");
