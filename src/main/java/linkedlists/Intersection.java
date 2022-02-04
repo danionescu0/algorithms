@@ -1,4 +1,4 @@
-package lists;
+package linkedlists;
 
 /**
  * Given tow (singly) linked lists, determine if the two lists intersect. Return the intersection node. note that the

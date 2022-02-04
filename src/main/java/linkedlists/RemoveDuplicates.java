@@ -1,6 +1,4 @@
-package lists;
-
-import lombok.Data;
+package linkedlists;
 
 /**
  * Write the code to remove duplicates from an unsorted list

@@ -1,4 +1,4 @@
-package lists;
+package linkedlists;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
