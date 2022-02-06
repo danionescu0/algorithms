@@ -28,7 +28,7 @@ public class AppleRepositoryImpl implements AppleRepository {
     public List<Apple> getGreen() {
         return this.apples
                 .stream()
-                .filter(apple -> apple.getColor().equals("green"))
+                .filter(apple -> apple.getColor() == Apple.Color.GREEN)
                 .collect(Collectors.toList());
     }
 
@@ -44,7 +44,7 @@ public class AppleRepositoryImpl implements AppleRepository {
     public List<Apple> getRedAndHeavy() {
         return this.apples
                 .stream()
-                .filter(apple -> apple.getColor().equals("red"))
+                .filter(apple -> apple.getColor() == Apple.Color.RED)
                 .filter(apple -> apple.getWeight() > 150)
                 .collect(Collectors.toList());
     }

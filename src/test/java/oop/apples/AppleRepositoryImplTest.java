@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppleRepositoryImplTest {
-
     @Test
     void getGreen() {
         var sut = new AppleRepositoryImpl(getDummy());
@@ -62,11 +61,11 @@ class AppleRepositoryImplTest {
 
     private List<Apple> getDummy() {
         var apples = new ArrayList<Apple>();
-        apples.add(new Apple(1, 80, "green"));
-        apples.add(new Apple(2, 120, "green"));
-        apples.add(new Apple(3, 155, "red"));
-        apples.add(new Apple(4, 110, "yellow"));
-        apples.add(new Apple(5, 175, "yellow"));
+        apples.add(new Apple(1, 80, Apple.Color.GREEN));
+        apples.add(new Apple(2, 120, Apple.Color.GREEN));
+        apples.add(new Apple(3, 155, Apple.Color.RED));
+        apples.add(new Apple(4, 110, Apple.Color.YELLOW));
+        apples.add(new Apple(5, 175, Apple.Color.YELLOW));
 
         return apples;
     }

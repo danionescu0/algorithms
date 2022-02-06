@@ -10,10 +10,21 @@ import java.util.Objects;
 @Getter
 @Setter
 public final class Apple {
+    public enum Color {
+        GREEN("green"),
+        RED("red"),
+        YELLOW("yellow"),
+        ;
+        private String name;
+
+        Color(String name) {
+            this.name = name;
+        }
+    }
+
     private final Integer id;
     private Integer weight;
-    private String color;
-
+    private Color color;
 
     @Override
     public boolean equals(Object o) {
