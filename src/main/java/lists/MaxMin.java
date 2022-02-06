@@ -25,9 +25,9 @@ import java.util.TreeSet;
  */
 public class MaxMin {
     //@todo optimize code, the sorting makes it inefficient
-    public static int get(int k, List<Integer> input) {
+    public int getVariant1(int k, List<Integer> input) {
         if (input.size() < k) {
-            throw new IllegalArgumentException("K must me less then input list size");
+            throw new IllegalArgumentException("K must be less then input list size");
         }
         Collections.sort(input);
         var minUnfairness = Integer.MAX_VALUE;
@@ -39,6 +39,41 @@ public class MaxMin {
                 max = Math.max(max, input.get(j));
             }
             minUnfairness = Math.min(minUnfairness, max - min);
+        }
+
+        return minUnfairness;
+    }
+
+    /**
+     * Working on an optimized solution
+     * @Todo finish
+     */
+    public int getVariant2(int k, List<Integer> input) {
+        if (input.size() < k) {
+            throw new IllegalArgumentException("K must be less then input list size");
+        }
+        var minUnfairness = Integer.MAX_VALUE;
+        var minUnfairnessLeft = Integer.MAX_VALUE;
+        var minUnfairnessRight = Integer.MAX_VALUE;
+        var orderedInsertLeft = new TreeSet<Integer>();
+        var orderedInsertRight = new TreeSet<Integer>();
+        for (var i = 0; i < k; i++) {
+            orderedInsertLeft.add(input.get(i));
+            orderedInsertRight.add(input.get(i));
+        }
+        for(var i=1; i <= input.size() - k; i++) {
+            orderedInsertLeft.add(input.get(k + i - 1));
+            orderedInsertLeft.pollLast();
+            orderedInsertRight.add(input.get(k + i - 1));
+            orderedInsertRight.pollFirst();
+            minUnfairnessLeft = Math.min(minUnfairnessLeft, orderedInsertLeft.last() - orderedInsertLeft.first());
+            minUnfairnessRight = Math.min(minUnfairnessRight, orderedInsertRight.last() - orderedInsertRight.first());
+            minUnfairness = Math.min(minUnfairnessLeft, minUnfairnessRight);
+            if (minUnfairnessLeft < minUnfairnessRight) {
+                orderedInsertRight = orderedInsertLeft;
+            } else {
+                orderedInsertLeft = orderedInsertRight;
+            }
         }
 
         return minUnfairness;
