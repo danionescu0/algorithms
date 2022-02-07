@@ -2,15 +2,8 @@ package threading;
 
 import lombok.AllArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.ConcurrentLinkedDeque;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.CyclicBarrier;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.concurrent.*;
 
 /**
  * There are two kinds of threads: oxygen and hydrogen. Your goal is to group these threads to form water molecules.
@@ -34,9 +27,10 @@ import java.util.stream.Collectors;
  * Write synchronization code for oxygen and hydrogen molecules that enforces these constraints.
  */
 public class BuildingH2O {
-    private ConcurrentLinkedDeque<Character> result;
-    private ConcurrentLinkedDeque<Character> elementsQueue;
+    private LinkedBlockingQueue<Character> result;
     private CyclicBarrier cyclicBarrier;
+    private Semaphore hydrogen = new Semaphore(2);
+    private Semaphore oxygen = new Semaphore(1);
 
     @AllArgsConstructor
     class Atom implements Runnable {
@@ -44,63 +38,50 @@ public class BuildingH2O {
 
         @Override
         public void run() {
-            var nrUntilCompletion = result.size() % 3;
-            var descendingIte = result.descendingIterator();
-            var i = 0;
-            var builder = new StringBuilder();
-            while (descendingIte.hasNext() && i < nrUntilCompletion) {
-                builder.append(descendingIte.next());
-                i++;
-            }
-            var lastTwo = builder.toString();
-            if (lastTwo.equals("")
-                ||lastTwo.equals("O") && element.toString().equals("H")
-                || lastTwo.equals("OH") && element.toString().equals("H")
-                || lastTwo.equals("HH") && element.toString().equals("O")
-                || lastTwo.equals("H") && element.toString().equals("O")) {
-                result.offerFirst(element);
-                try {
-                    System.out.println(Thread.currentThread().getName() + " waiting for others to reach barrier.");
+            try {
+                if (element.toString().equals("H")) {
+                    hydrogen.acquire();
+                    result.offer(element);
                     cyclicBarrier.await();
-                } catch (InterruptedException e) {
-                    System.out.println("intrerupted");
-                } catch (BrokenBarrierException e) {
-                    System.out.println("brokern barier");
+                    hydrogen.release();
+                } else {
+                    oxygen.acquire();
+                    result.offer(element);
+                    cyclicBarrier.await();
+                    oxygen.release();
                 }
-            } else {
-                elementsQueue.offerLast(element);
-            }
-
-        }
-    }
-
-    class Finis implements Runnable {
-        @Override
-        public void run() {
-            System.out.println("Printing iteration:");
-            for (Character character: result) {
-                System.out.print(character);
+            } catch (InterruptedException | BrokenBarrierException e) {
+                e.printStackTrace();
             }
         }
     }
 
-    public List<Character> getAtoms(String atoms) {
-        result = new ConcurrentLinkedDeque<>();
-        var individualAtoms = atoms.chars()
-                .mapToObj(value -> (char) value)
-                .collect(Collectors.toList());
-        elementsQueue = new ConcurrentLinkedDeque<>(individualAtoms);
-        cyclicBarrier = new CyclicBarrier(3, new Finis());
-        var i = 0;
-        while (!elementsQueue.isEmpty()) {
-            var queueElement = elementsQueue.pollFirst();
-            var atom = new Thread(new Atom(queueElement));
-            atom.setName(String.format("T{%s} ({%s})", i, queueElement));
-            atom.start();
-            i++;
+    public List<Character> getAtoms(String atoms) throws InterruptedException {
+        checkValidity(atoms);
+        cyclicBarrier = new CyclicBarrier(3);
+        result = new LinkedBlockingQueue<>();
+        var threads = new LinkedList<Thread>();
+        for (Character atom: atoms.toCharArray()) {
+            var atomThread = new Thread(new Atom(atom));
+            atomThread.start();
+            threads.add(atomThread);
+        }
+        for (Thread thread: threads) {
+            thread.join();
         }
 
+        return new ArrayList<>(result);
+    }
 
-        return new ArrayList<>();
+    private void checkValidity(String atoms) {
+        var nrH = 0;
+        var nrO = 0;
+        for (Character atom: atoms.toCharArray()) {
+            nrH += atom.toString().equals("H") ? 1 : 0;
+            nrO += atom.toString().equals("O") ? 1 : 0;
+        }
+        if (nrH == 0 || nrO == 0 || nrH / nrO != 2) {
+            throw new IllegalArgumentException("Not all atoms can form water");
+        }
     }
 }

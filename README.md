@@ -49,7 +49,7 @@ Unit tests: Junit jupiter 5.8
 ## Threading
 
 * FizzBuzz
-* BuildingH2O (in progress)
+* BuildingH2O 
 
 ## Trees
 * FirstCommonAncestor
