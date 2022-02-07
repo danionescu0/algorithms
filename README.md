@@ -27,6 +27,9 @@ Unit tests: Junit jupiter 5.8
 
 * MaxMin
 
+## OOP
+* apples
+
 ## Recursive
 
 * PaintFill
@@ -46,6 +49,7 @@ Unit tests: Junit jupiter 5.8
 ## Threading
 
 * FizzBuzz
+* BuildingH2O (in progress)
 
 ## Trees
 * FirstCommonAncestor

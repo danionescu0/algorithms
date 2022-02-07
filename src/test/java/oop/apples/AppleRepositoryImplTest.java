@@ -54,7 +54,7 @@ class AppleRepositoryImplTest {
 
     List<Integer> getIds(List<Apple> apples) {
         return apples.stream()
-                .map(apple -> apple.getId())
+                .map(Apple::getId)
                 .collect(Collectors.toList());
     }
 
