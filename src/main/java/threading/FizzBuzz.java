@@ -1,18 +1,13 @@
 package threading;
 
-import lombok.SneakyThrows;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Queue;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * In the classic problem FizzBuzz you are told to print the numbers from 1 to n. However when the number
@@ -28,7 +23,7 @@ public class FizzBuzz {
     private List<String> result;
     private AtomicInteger current;
     private Integer total;
-    private Semaphore lock = new Semaphore(1);
+    private final Semaphore lock = new Semaphore(1);
 
     private class Fizz implements Runnable {
         private Predicate<Integer> condition;

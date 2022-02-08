@@ -29,8 +29,8 @@ import java.util.concurrent.*;
 public class BuildingH2O {
     private LinkedBlockingQueue<Character> result;
     private CyclicBarrier cyclicBarrier;
-    private Semaphore hydrogen = new Semaphore(2);
-    private Semaphore oxygen = new Semaphore(1);
+    private final Semaphore hydrogen = new Semaphore(2);
+    private final Semaphore oxygen = new Semaphore(1);
 
     @AllArgsConstructor
     class Atom implements Runnable {
